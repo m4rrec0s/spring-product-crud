@@ -20,29 +20,27 @@ const ProductList: React.FC<ProductListProps> = ({
   );
 
   return (
-    <>
-      <ul className="flex flex-col gap-2 mt-3">
-        {filteredProducts.map((product, index) => (
-          <li
-            key={index}
-            className="hover:opacity-100 opacity-80 transition-opacity"
-          >
-            <ProductItem
-              onDeleteProduct={onDeleteProduct}
-              onEditProduct={onEditProduct}
-              product={product}
-            />
-          </li>
-        ))}
-        {filteredProducts.length === 0 && (
-          <li className="flex justify-center items-center h-full">
-            <p className="text-center text-gray-500 ">
-              Nenhum produto encontrado na busca.
-            </p>
-          </li>
-        )}
-      </ul>
-    </>
+    <ul className="flex flex-col gap-2 mt-3 flex-1 flex-shrink">
+      {filteredProducts.map((product, index) => (
+        <li
+          key={index}
+          className="hover:opacity-100 opacity-80 transition-opacity"
+        >
+          <ProductItem
+            onDeleteProduct={onDeleteProduct}
+            onEditProduct={onEditProduct}
+            product={product}
+          />
+        </li>
+      ))}
+      {filteredProducts.length === 0 && (
+        <li className="flex justify-center items-center ">
+          <p className="text-center text-gray-500 ">
+            Nenhum produto encontrado na busca.
+          </p>
+        </li>
+      )}
+    </ul>
   );
 };
 

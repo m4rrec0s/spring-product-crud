@@ -51,13 +51,13 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
+    <div className="h-screen w-screen flex justify-center items-center px-5">
       <section className="space-y-3 w-full max-w-[600px]">
         <div className="border p-6 rounded-lg shadow-sm">
           <h1 className="text-lg text-center mb-3">Cadastro de produtos</h1>
           <FormProduct onAddProduct={handleAddProduct} />
         </div>
-        <div className="border p-6 rounded-lg shadow-sm max-h-[400px] min-h-[400px] overflow-y-scroll">
+        <div className="border p-6 rounded-lg shadow-sm h-[400px] overflow-y-scroll">
           <h2 className="text-lg text-center mb-3">Lista de produtos</h2>
           <Input
             placeholder="Buscar por produtos"
@@ -68,7 +68,7 @@ export default function Home() {
           {loading ? (
             <div
               role="status"
-              className="flex h-full w-full items-center justify-center"
+              className="flex h-full w-full items-center justify-center flex-1"
             >
               <svg
                 aria-hidden="true"
