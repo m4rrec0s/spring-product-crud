@@ -20,10 +20,34 @@ public class ProductController {
     ProductRepository productRepository;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAll() {
+    public ResponseEntity<List<Product>> getAll(
+            @RequestParam(value = "limit", required = false) String limitParam,
+            @RequestParam(value = "name", required = false) String name) {
+
         List<Product> products = productRepository.findAll();
+
+        if (name != null && !name.isEmpty()) {
+            products = products.stream()
+                    .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
+                    .toList();
+        }
+
+        if (limitParam != null) {
+            int limit;
+            try {
+                limit = Integer.parseInt(limitParam);
+            } catch (NumberFormatException e) {
+                limit = 10;
+            }
+            if (limit > products.size()) {
+                limit = products.size();
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(products.subList(0, limit));
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable(value = "id") Integer id) {
@@ -31,14 +55,13 @@ public class ProductController {
         if (product.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
         }
-        return ResponseEntity.status(HttpStatus.FOUND).body(product.get());
+        return ResponseEntity.status(HttpStatus.OK).body(product.get());
     }
 
     @PostMapping
     public ResponseEntity saveProduct(@RequestBody ProductDto dto) {
         var product = new Product();
         BeanUtils.copyProperties(dto, product);
-        System.out.println("Produto recebido: " + product.getName() + " - " + product.getPrice());
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(product));
     }
 
