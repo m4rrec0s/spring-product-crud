@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import FormProduct from "./components/formProduct";
 import ProductList from "./components/productList";
 import { Product } from "./types/product";
+import { Input } from "./components/ui/input";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -55,8 +57,14 @@ export default function Home() {
           <h1 className="text-lg text-center mb-3">Cadastro de produtos</h1>
           <FormProduct onAddProduct={handleAddProduct} />
         </div>
-        <div className="border p-6 rounded-lg shadow-sm">
+        <div className="border p-6 rounded-lg shadow-sm max-h-[400px] min-h-[400px] overflow-y-scroll">
           <h2 className="text-lg text-center mb-3">Lista de produtos</h2>
+          <Input
+            placeholder="Buscar por produtos"
+            name="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
           {loading ? (
             <div
               role="status"
@@ -82,11 +90,16 @@ export default function Home() {
             </div>
           ) : error ? (
             <div className="text-red-500">{error}</div>
+          ) : products.length === 0 ? (
+            <div className="text-center text-gray-500 flex justify-center items-center h-full">
+              Não existe produtos
+            </div>
           ) : (
             <ProductList
               onDeleteProduct={handleDeleteProduct}
               onEditProduct={handleEditProduct}
               products={products}
+              searchTerm={searchTerm}
             />
           )}
         </div>
