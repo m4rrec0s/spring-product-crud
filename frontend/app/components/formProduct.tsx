@@ -27,6 +27,7 @@ const FormProduct: React.FC<FormProductProps> = ({ onAddProduct }) => {
         toast({
           title: "Sucesso!",
           description: "Produto cadastrado com sucesso.",
+          variant: "success",
         });
         setName("");
         setPrice("");
@@ -35,12 +36,14 @@ const FormProduct: React.FC<FormProductProps> = ({ onAddProduct }) => {
         toast({
           title: "Erro ao cadastrar produto",
           description: errorData.message || "Erro desconhecido.",
+          variant: "destructive",
         });
       }
     } catch (error: unknown) {
       toast({
         title: "Erro ao cadastrar produto",
         description: (error as Error).message || "Erro desconhecido.",
+        variant: "destructive",
       });
     }
   };

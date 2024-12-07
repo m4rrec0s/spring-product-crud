@@ -56,12 +56,14 @@ const ProductItem = ({
         toast({
           title: "Sucesso!",
           description: "Produto editado com sucesso.",
+          variant: "success",
         });
       }
     } catch (error) {
       toast({
         title: "Erro ao editar produto",
         description: (error as Error).message || "Erro desconhecido.",
+        variant: "destructive",
       });
     }
   };
@@ -80,6 +82,7 @@ const ProductItem = ({
         toast({
           title: "Produto excluído",
           description: "O produto foi excluído com sucesso.",
+          variant: "destructive",
         });
       } else {
         throw new Error("Erro ao excluir o produto.");
@@ -88,6 +91,7 @@ const ProductItem = ({
       toast({
         title: "Erro ao excluir produto",
         description: (error as Error).message || "Erro desconhecido.",
+        variant: "destructive",
       });
     }
   };
